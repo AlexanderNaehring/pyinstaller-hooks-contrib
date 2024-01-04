@@ -1866,3 +1866,16 @@ def test_seedir(pyi_builder):
     pyi_builder.test_source("""
         import seedir
     """)
+
+
+@importorskip('wx')
+def test_wx_html2_windows(pyi_builder):
+    # wxPython WebView widget, package name: wx, module html2
+    pyi_builder.test_source("""
+        import wx
+        from wx import html2
+        import platform
+
+        if platform.system() == "Windows" and not html2.WebView.IsBackendAvailable(html2.WebViewBackendEdge):
+            raise RuntimeError("Edge Backend not available")
+    """)
